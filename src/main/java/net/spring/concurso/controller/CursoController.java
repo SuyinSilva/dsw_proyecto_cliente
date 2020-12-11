@@ -5,17 +5,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import com.google.gson.Gson;
 
 import net.spring.concurso.entity.Curso;
-import net.spring.concurso.entity.SistemaEvaluacion;
+import net.spring.concurso.entity.TipoCarrera;
 
 @Controller
 @RequestMapping(value = "/curso")
@@ -35,12 +36,12 @@ public class CursoController {
 		model.addAttribute("dataCursos",lista);
 		return "curso";
 	}
-	@RequestMapping(value = "/listaSistemas")
+	@RequestMapping(value = "/listaTipos")
 	@ResponseBody
-	public SistemaEvaluacion[] listaSistemas(Model model) {
-		SistemaEvaluacion[] lista=null;
+	public TipoCarrera[] listaTipos(Model model) {
+		TipoCarrera[] lista=null;
 		RestTemplate rt=new RestTemplate();
-		ResponseEntity<SistemaEvaluacion[]>data= rt.getForEntity(URL+"/listAllSistemaEvaluacion", SistemaEvaluacion[].class);
+		ResponseEntity<TipoCarrera[]>data= rt.getForEntity(URL+"/listAllTipoCarrera", TipoCarrera[].class);
 		lista=data.getBody();
 		return lista;
 	}
@@ -61,7 +62,8 @@ public class CursoController {
 						@RequestParam("codigo") String cod,
 						@RequestParam("nombre") String nom,
 						@RequestParam("estado") String est,
-						@RequestParam("sistemaevaluacion") int codSistemae,
+						@RequestParam("precio") double pre,
+						@RequestParam("tipocarrera") int codTipoc,
 						RedirectAttributes redirect) {
 		//crear objeto de la clase Computadora
 		Curso bean=new Curso();
@@ -69,7 +71,8 @@ public class CursoController {
 		bean.setCodigo(cod);
 		bean.setNombre(nom);
 		bean.setEstado(est);
-		bean.setSistemaevaluacion(new SistemaEvaluacion(codSistemae));
+		bean.setPrecio(pre);
+		bean.setTipocarrera(new TipoCarrera(codTipoc));
 		//serializar
 		Gson gson=new Gson();
 		String json=gson.toJson(bean);
@@ -114,7 +117,6 @@ public class CursoController {
 	
 	
 }
-
 
 
 

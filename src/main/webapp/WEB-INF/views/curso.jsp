@@ -1,4 +1,5 @@
 <jsp:include page="menu.jsp"/>
+
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -33,7 +34,7 @@
 	      <div class="modal-content">
 	        <!-- Modal Header -->
 	        <div class="modal-header">
-	          <h4 class="modal-title">Sistema</h4>
+	          <h4 class="modal-title">Mensaje</h4>
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
 	        
@@ -82,7 +83,8 @@
 		                <th>Código</th>
 		                <th>Nombre</th>
 		                <th>Estado</th>
-		                <th>Sistema de Evaluación</th>
+		                <th>Precio</th>
+		                <th>Tipo de Carreras</th>
 		                <th>Actualizar</th>
 		                <th>Eliminar</th>
 		            </tr>
@@ -94,10 +96,10 @@
 		                <td>${row.codigo}</td>
 		                <td>${row.nombre}</td>
 		                <td>${row.estado}</td>
-		                <td>${row.sistemaevaluacion.nombreSistemae}</td>
+		                <td>${row.precio}</td>
+		                <td>${row.tipocarrera.nombreTipoc}</td>
 		                <td><button type="button" class="btn btn-info btnEditar">Editar</button></td>
-		                <td><a href="delete/${row.codigoCurso}" class="btn btn-danger btnEliminar">Eliminar</a></td>  
-		     
+		                <td><a href="delete/${row.codigoCurso}" class="btn btn-danger btnEliminar">Eliminar</a></td>   
 		            </tr>
 				</c:forEach>
 		        </tbody>
@@ -128,8 +130,12 @@
 				    <input type="text" class="form-control" name="estado" id="estado">
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Sistema de Evaluacion</label>
-				    <select class="form-control" name="sistemaevaluacion" id="sistemaevaluacion">
+				    <label for="exampleInputEmail1">Precio</label>
+				    <input type="text" class="form-control" name="precio" id="precio">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Tipo de Carreras</label>
+				    <select class="form-control" name="tipocarrera" id="tipocarrera">
 				      <option value=" ">[Seleccione Categoria]</option>
 				    </select>
 				  </div>
@@ -159,18 +165,18 @@
 	
 	$(document).ready(function() {
 			$("#table").DataTable();
-		    cargarSistemas();
+		    cargarTipos();
 	} );
 	
 	
 //---------------------------------COMBO-------------------------------------//	
-function cargarSistemas(){
-	fetch("listaSistemas")
+function cargarTipos(){
+	fetch("listaTipos")
 	.then(response=>response.json())
-	.then(sistemaevaluacions=>{
-		sistemaevaluacions.forEach(sistemaevaluacion=>{
-				$("#sistemaevaluacion").append("<option value='"+ sistemaevaluacion.sisEvaluacion+"'>"+
-						sistemaevaluacion.nombreSistemae+"</option>");	
+	.then(tipocarreras=>{
+		tipocarreras.forEach(tipocarrera=>{
+				$("#tipocarrera").append("<option value='"+ tipocarrera.tipCarrera+"'>"+
+						tipocarrera.nombreTipoc+"</option>");	
 			})
 	})
 	
@@ -189,7 +195,6 @@ function cargarSistemas(){
 		$("#modalEliminar").modal("show");
 
 	})
-
 //---------------------------------EDITAR-------------------------------------//	
 $(document).on("click",".btnEditar",function(){
 	//obtener el còdigo de la computadora segùn la fila actual
@@ -203,16 +208,17 @@ $(document).on("click",".btnEditar",function(){
 		$("#codigo").val(curso.codigo);
 		$("#nombre").val(curso.nombre);
 		$("#estado").val(curso.estado);
-		$("#sistemaevaluacion").val(curso.sistemaevaluacion.sisEvaluacion);
+		$("#precio").val(curso.precio);
+		$("#tipocarrera").val(curso.tipocarrera.tipCarrera);
 	})
 	
-	$("#idTitulo").text("ACTUALIZAR LIBRO");
+	$("#idTitulo").text("ACTUALIZAR CURSO");
 	$('#modalCurso').modal({backdrop: 'static',keyboard:false,show:true});
 
 	    
 });	
 
-/*
+/*REYES
 //---------------------------------CERRAR-------------------------------------//	
 $(document).on("click","#btnCerrar",function(){
 	$('#frmCurso').trigger("reset");
@@ -264,21 +270,21 @@ $(document).on("click","#btnCerrar",function(){
      			 		}
      			 	}
      		     }, 
-     			tipo:{
- 			 		validators:{
- 			 			notEmpty:{
- 			 				message:'Campo tipo es obligatorio'	
- 			 			},
- 			 			regexp:{
- 			 				regexp:/^[a-zA-Z\s\ñ\Ñ\á\é]{3,15}$/,
- 			 				message:'Campo tipo solo letras min 3 hasta max 15 letras'
- 			 			}
- 			 		}
- 		     	 },   
- 		     	sitemaevaluacion:{
+     		    precio:{
      			 	validators:{
      			 		notEmpty:{
-     			 			message:'Campo sistema de evaluación es obligatorio'	
+     			 			message:'Campo precio es obligatorio'	
+     			 		},
+     			 		regexp:{
+    			 			regexp:/^\d{3,}$/,
+    			 			message:'Campo precio min 3 cifras'
+    			 		}
+     			 	}
+     		 	 }  
+     		    tipocarrera:{
+     			 	validators:{
+     			 		notEmpty:{
+     			 			message:'Campo tipo de carrera es obligatorio'	
      			 		}
      			 	}
      		 	 },    

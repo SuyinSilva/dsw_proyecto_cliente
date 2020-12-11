@@ -5,10 +5,8 @@ public class Curso implements Serializable{
 	private String codigo;
 	private String nombre;
 	private String estado;
-	private SistemaEvaluacion sistemaevaluacion;
-	
-	
-	
+	private double precio;
+	private TipoCarrera tipocarrera;
 	public int getCodigoCurso() {
 		return codigoCurso;
 	}
@@ -33,11 +31,17 @@ public class Curso implements Serializable{
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	public SistemaEvaluacion getSistemaevaluacion() {
-		return sistemaevaluacion;
+	public double getPrecio() {
+		return precio;
 	}
-	public void setSistemaevaluacion(SistemaEvaluacion sistemaevaluacion) {
-		this.sistemaevaluacion = sistemaevaluacion;
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+	public TipoCarrera getTipocarrera() {
+		return tipocarrera;
+	}
+	public void setTipocarrera(TipoCarrera tipocarrera) {
+		this.tipocarrera = tipocarrera;
 	}
 	
 	

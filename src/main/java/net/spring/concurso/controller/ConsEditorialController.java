@@ -16,9 +16,9 @@ import net.spring.concurso.entity.Editorial;
 import net.spring.concurso.entity.Pais;
 
 @Controller
-@RequestMapping(value = "/editorialCon")
+@RequestMapping(value = "/editorialConsultas")
 public class ConsEditorialController {
-	private String URL="http://localhost:8080/WS_Servidor/editorial";
+	private String URL="http://localhost:8080/WS_Servidor/editorialConsultas";
 	
 	
 	@RequestMapping(value = "/")
@@ -95,7 +95,7 @@ public class ConsEditorialController {
 			redirect.addFlashAttribute("MENSAJE","Registro actualizado...");			
 		}
 		
-		return "redirect:/editorialCon/";
+		return "redirect:/editorialConsultas/";
 	}
 	
 	@RequestMapping(value = "/delete/{codigo}")
@@ -109,7 +109,7 @@ public class ConsEditorialController {
 			e.printStackTrace();
 			redirect.addFlashAttribute("MENSAJE","Error en la eliminaciòn...");
 		}
-		return "redirect:/editorialCon/";
+		return "redirect:/editorialConsultas/";
 	}
 }
 

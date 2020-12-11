@@ -7,50 +7,56 @@
 <head>
 <title></title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="<c:url value="resources/css/style.css"/>">
 
 </head>
-<body>
+<body >
 
-
-
-
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	  	  <div class="navbar-header">
-		       <div class="navbar-header">
-	     		 <a class="navbar-brand" href="#">OTHER BOOK</a>
+<table>
+<tr>
+<td>
+	<nav class="full-box nav-lateral-menu ">
+	 <nav style="margin-right:10%; padding-bottom: 105px" class="navbar navbar-expand-sm bg-dark">  
+	 <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark">  --> 
+    <!-- <div  class="navbar-nav ml-auto bg-dark navbar-dark"> -->
+	    <ul>
+		  <li class="navbar-nav">
+	<div class="navbar-header">
+	 <h5 style="color: white">______________________</h5>
+	     		 <a class="navbar-brand" href="#">OTHER BOOK.COM   </a>
+	     		  <h5 style="color: white">______________________</h5>
+	     		   <h5 style="color: white">       Bienvenido(a):  </h5>  	<h6	style="color: white"> <span class="nav-item nav-link">   
+		      ${sessionScope.dataUsuario.empleado.apellidos} 
+		     		${sessionScope.dataUsuario.empleado.nombres}
+		     	</span> </h6>
+	     		 <h5 style="color: white">       Cargo :</h5>   	<h6	style="color: white">  <span class="nav-item nav-link">   
+		     		${sessionScope.dataUsuario.rol.descripcion}
+		     	</span> <h5 style="color: white;">______________________</h5><h5 style="color: black;">______________________</h5>  </h6>
 	  			</div>
-	  	</div>
-	  
-	  <div class="collapse navbar-collapse">
-		  <ul class="navbar-nav">
 	
-
 		 	<c:forEach items="${sessionScope.dataEnlaces}" var="row">
 			    <li class="nav-item">
+			   <!--  <h5 style="color: blue;">-</h5>    --> 
 			      <a class="nav-link" href="${row.ruta}">${row.descripcion}</a>
 			    </li>
+			    <h5 style="color: black;">______________________</h5> 
 			</c:forEach>
+			
+<div class="navbar-nav mr-auto">
 	
-		    
-		  </ul>
-	
-		  <div class="navbar-nav ml-auto">
-		  		
-		     	<span class="nav-item nav-link">   
-		     		${sessionScope.dataUsuario.empleado.apellidos} 
-		     		${sessionScope.dataUsuario.empleado.nombres}
-		     	</span>  
-		     
-		        <a href="http://localhost:8080/WS_Cliente_Spring/sesion/" class="nav-item nav-link">Cerar Sesión</a>
-	      </div>
+<a style="color: white; font-size: 20px" href="http://localhost:8080/WS_Cliente_Spring/sesion/" class="nav-item nav-link">Cerrar Sesión=> </a>
+	      </div> 
+		  </li>
+    	 </ul>		
     </div>
-	</nav>
+</nav>
+</td>
+<td>
 
-
-
-
-
-	
+</td>
+</tr>
+</table>
+ 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script   src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
