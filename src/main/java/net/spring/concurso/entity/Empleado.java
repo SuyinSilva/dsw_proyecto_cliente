@@ -1,14 +1,13 @@
 package net.spring.concurso.entity;
 import java.io.Serializable;
-import java.util.Date;
-
+import java.sql.Date;
 public class Empleado implements Serializable{
 	private int codigoEmpleado;
 	private String nombres;
 	private String apellidos;
 	private String sexo;
-	private String fechaRegistro;
-	private String fechaNacimiento;
+	private Date fechaRegistro;
+	private Date fechaNacimiento;
 	private String direccion;
 	private Distrito distritoEmpleado;
 	private TipoEmpleado tipoEmpleado;
@@ -53,20 +52,20 @@ public class Empleado implements Serializable{
 		this.sexo = sexo;
 	}
 
-	
-	public String getFechaRegistro() {
+
+	public Date getFechaRegistro() {
 		return fechaRegistro;
 	}
 
-	public void setFechaRegistro(String fechaRegistro) {
+	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

@@ -37,18 +37,6 @@ public class UsuarioClienteController {
 		model.addAttribute("dataUsuarios",lista);
 		return "usuario";
 	}
-	@RequestMapping(value = "/re")
-	public String secundario(Model model) {
-		//clase para llamar a un servicio 
-		RestTemplate rt=new RestTemplate();
-		//acceder a la anotaciòn GET del servicio usar el nombre "listAllComputadora"
-		ResponseEntity<Usuario[]>data= rt.getForEntity(URL+"/listAllUsuario", Usuario[].class);
-		//obtener el JSOn que tiene data
-		Usuario[] lista=data.getBody();
-		//crear un atrubuto
-		model.addAttribute("dataUsuarios",lista);
-		return "session";
-	}
 	@RequestMapping(value = "/listaRoles")
 	@ResponseBody
 	public Rol[] listaRoles(Model model) {
@@ -78,39 +66,6 @@ public class UsuarioClienteController {
 		lista=data.getBody();
 		return lista;
 	}	
-	///regisro solo
-	@RequestMapping(value = "/save2")
-	public String save2(@RequestParam("codigo") int cod,
-						@RequestParam("login") String log,
-						@RequestParam("password") String pas,
-						@RequestParam("rol")  int idrol,
-						@RequestParam("empleado")  int codigoEmpleado,
-						RedirectAttributes redirect) {
-		//crear objeto de la clase Computadora
-		Usuario bean=new Usuario();
-		bean.setCodUsuario(cod);
-		bean.setLogin(log);
-		bean.setPassword(pas);
-		bean.setRol(new Rol(idrol));
-		bean.setEmpleado(new Empleado(codigoEmpleado));
-		//serializar
-		Gson gson=new Gson();
-		String json=gson.toJson(bean);
-		//
-		RestTemplate rt=new RestTemplate();
-		//validar cod
-		if(cod==0) {
-			//cabecera formato JSON
-			HttpHeaders headers=new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			//unir json+headers
-			HttpEntity<String> request=new HttpEntity<String>(json,headers);
-			rt.postForObject(URL+"/saveUsuario", request, String.class);
-			redirect.addFlashAttribute("MENSAJE","Registro correcto...");
-		}
-		return "redirect:/clienteReg/reg";
-	}
-	////////////
 	
 	@RequestMapping(value = "/save")
 	public String save(@RequestParam("codigo") int cod,

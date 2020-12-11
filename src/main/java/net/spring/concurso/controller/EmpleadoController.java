@@ -1,5 +1,5 @@
 package net.spring.concurso.controller;
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -70,8 +70,8 @@ public class EmpleadoController {
 						@RequestParam("nombre") String nom,
 						@RequestParam("apellido") String ape,
 						@RequestParam("sexo") String sex,
-						@RequestParam("fecReg") String fecReg,
-						@RequestParam("fecNac") String fec,
+						@RequestParam("fecReg") Date fecReg,
+						@RequestParam("fecNac") Date fec,
 						@RequestParam("direccion") String dir,
 						@RequestParam("distritoEmpleado") int idDistrito,
 						@RequestParam("tipoEmpleado") int codigoTipoEmpleado,

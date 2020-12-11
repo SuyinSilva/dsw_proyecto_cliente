@@ -111,7 +111,7 @@
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="idTitulo">REGISTRAR COMPUTADORA</h5>
+		        <h5 class="modal-title" id="idTitulo">REGISTRAR Usuario</h5>
 		      </div>
 		      <div class="modal-body">
 		        <form id="frmUsuario" action="save" method="post" data-toggle="validator" role="form">

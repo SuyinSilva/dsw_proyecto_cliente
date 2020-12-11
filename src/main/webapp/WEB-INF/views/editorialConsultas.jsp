@@ -1,4 +1,4 @@
-
+<jsp:include page="menu.jsp"/>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -25,18 +25,10 @@
 	}
 
 </style>
-</head>
-<body><table>
-<tr>
-<td><jsp:include page="menu.jsp"/>
-</td>
+</head>		
+<body>
+            <h1 align="center">Consultar de Editoriales</h1>
 
-<td>
-
-	<div class="container">	
-
-			
-<h1 align="center">Listado de Editoriales</h1>
 	 	 	<!-- Button trigger modal -->
 			<div class="mt-5">
 			
@@ -47,9 +39,6 @@
 			 </label>
 			 
 			  </div>
-			
-			
-			
 			<table id="table" class="table table-striped table-bordered" style="width:100%">
 	
 		        <thead>
@@ -77,10 +66,7 @@
 	    	</table>		
 		</div>
 	</div>
-	</div>
-	</td>
-</tr>
-</table>
+
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -96,7 +82,21 @@
 			$("#table").DataTable();
 		    cargarPaises();
 	} );
-	
+	$(document).on("click","btnBuscar",function(){
+		//obtener el còdigo de la computadora segùn la fila actual
+		var cod;
+		cod=$(this).parents("tr").find("td")[0].innerHTML;
+		fetch("buscar?codigo="+cod)
+		.then(response=>response.json())
+		.then(editorial=>{
+			//console.log(computadora);
+			$("#codigo").val(editorial.idEditorial);
+			$("#nombre").val(editorial.nombre);
+			$("#direccion").val(editorial.direccion);
+			$("#telefono").val(editorial.telefono);
+			$("#correo").val(editorial.correo);
+			$("#pais").val(editorial.pais.idPais);
+		})
 	
 //---------------------------------COMBO-------------------------------------//	
 
