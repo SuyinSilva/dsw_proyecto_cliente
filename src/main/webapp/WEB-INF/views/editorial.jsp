@@ -1,4 +1,4 @@
-<jsp:include page="menu.jsp"/>
+<jsp:include page="menuAdmin.jsp"/>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
