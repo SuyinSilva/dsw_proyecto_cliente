@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Editorial</title>
+<title>Empleado</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
 <style type="text/css">
@@ -39,7 +39,7 @@
 	        
 	        <!-- Modal body -->
 	        <div class="modal-body">
-	        	Seguro de eliminar Editorial? 
+	        	Seguro de eliminar Empleado? 
 	        </div>
 	        
 	        <!-- Modal footer -->
@@ -68,11 +68,11 @@
 	
 	
 	
-	 	<h1 align="center">Listado de Editoriales</h1>
+	 	<h1 align="center">Listado de Empleados</h1>
 	 	
 	 	<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEditorial">
-		  Nueva Editorial
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEmpleado">
+		  Nueva Empleado
 		</button>
 		<div class="mt-5">
 			<table id="table" class="table table-striped table-bordered" style="width:100%">
@@ -80,25 +80,29 @@
 		            <tr>
 		                <th>Código</th>
 		                <th>Nombre</th>
+		                <th>Apellidos</th>
+		                <th>Sexo</th>
+		                <th>Fecha Nacimiento</th>
 		                <th>Dirección</th>
-		                <th>Telefono</th>
-		                <th>Correo</th>
-		                <th>Pais</th>
+		                <th>Distrito</th>
+		                <th>Tipo Empleado</th>
 		                <th></th>
 		                <th></th>
 		            </tr>
 		        </thead>
 		        <tbody>
-				<c:forEach items="${requestScope.dataEditoriales}" var="row">
+				<c:forEach items="${requestScope.dataEmpleados}" var="row">
 		            <tr>
-		                <td>${row.idEditorial}</td>
-		                <td>${row.nombre}</td>
+		                <td>${row.codigoEmpleado}</td>
+		                <td>${row.nombres}</td>
+		                 <td>${row.apellidos}</td>
+		                <td>${row.sexo}</td>
+		                <td>${row.fechaNacimiento}</td>
 		                <td>${row.direccion}</td>
-		                <td>${row.telefono}</td>
-		                <td>${row.correo}</td>
-		                <td>${row.pais.nombre}</td>
+		                <td>${row.distritoEmpleado.nombreDistrito}</td>
+		                <td>${row.tipoEmpleado.nombreTipoEmpleado}</td>
 		                <td><button type="button" class="btn btn-info btnEditar">Editar</button></td>
-		                   <td><a href="delete/${row.idEditorial}" class="btn btn-danger btnEliminar">Eliminar</a></td>  
+		                   <td><a href="delete/${row.codigoEmpleado}" class="btn btn-danger btnEliminar">Eliminar</a></td>  
 		            </tr>
 				</c:forEach>
 		        </tbody>
@@ -107,35 +111,49 @@
 	
 		
 		<!-- Modal -->
-		<div class="modal fade" id="modalEditorial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+		<div class="modal fade" id="modalEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="idTitulo">REGISTRAR EDITORIAL</h5>
+		        <h5 class="modal-title" id="idTitulo">REGISTRAR Empleado</h5>
 		      </div>
 		      <div class="modal-body">
-		        <form id="frmEditorial" action="save" method="post" data-toggle="validator" role="form">
+		        <form id="frmEmpleado" action="save" method="post" data-toggle="validator" role="form">
 				  <input type="text" name="codigo" id="codigo" value="0">
 				  <div class="form-group">
 				    <label for="exampleInputEmail1">Nombre</label>
 				    <input type="text" class="form-control" name="nombre" id="nombre">
 				  </div>
+				   <div class="form-group">
+				    <label for="exampleInputEmail1">Apellidos</label>
+				    <input type="text" class="form-control" name="apellido" id="apellido">
+				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Dirección</label>
+				    <label for="exampleInputEmail1">Sexo</label>
+				    <input type="text" class="form-control" name="sexo" id="sexo">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Fecha Registro</label>
+				    <input type="date" class="form-control" name="fecReg" id="fecReg">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Fecha Nacimiento</label>
+				    <input type="date" class="form-control" name="fecNac" id="fecNac">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">Direccion</label>
 				    <input type="text" class="form-control" name="direccion" id="direccion">
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Telefono</label>
-				    <input type="text" class="form-control" name="telefono" id="telefono">
+				    <label for="exampleInputEmail1">Distrito</label>
+				    <select class="form-control" name="distritoEmpleado" id="distritoEmpleado">
+				      <option value=" ">[Seleccione Distrito]</option>
+				    </select>
 				  </div>
 				  <div class="form-group">
-				    <label for="exampleInputEmail1">Correo</label>
-				    <input type="text" class="form-control" name="correo" id="correo">
-				  </div>
-				  <div class="form-group">
-				    <label for="exampleInputEmail1">Pais</label>
-				    <select class="form-control" name="pais" id="pais">
-				      <option value=" ">[Seleccione Pais]</option>
+				    <label for="exampleInputEmail1">Tipo Empleado</label>
+				    <select class="form-control" name=tipoEmpleado id="tipoEmpleado">
+				      <option value=" ">[Seleccione Tipo]</option>
 				    </select>
 				  </div>
 				  <div class="modal-footer">
@@ -164,24 +182,36 @@
 	
 	$(document).ready(function() {
 			$("#table").DataTable();
-		    cargarPaises();
+			cargarDistritos();
+			cargarTipoEmpleados();
 	} );
 	
 	
 //---------------------------------COMBO-------------------------------------//	
-function cargarPaises(){
-	fetch("listaPaises")
+function cargarDistritos(){
+	fetch("listaDistritos")
 	.then(response=>response.json())
-	.then(paises=>{
-		paises.forEach(pais=>{
-				$("#pais").append("<option value='"+ pais.idPais+"'>"+
-						pais.nombre+"</option>");	
+	.then(distritoEmpleados=>{
+		distritoEmpleados.forEach(distritoEmpleado=>{
+				$("#distritoEmpleado").append("<option value='"+ distritoEmpleado.idDistrito+"'>"+
+						distritoEmpleado.nombreDistrito+"</option>");	
 			})
 	})
 	
 	
 }
-
+function cargarTipoEmpleados(){
+	fetch("listaTipoEmpleados")
+	.then(response=>response.json())
+	.then(tipoEmpleados=>{
+		tipoEmpleados.forEach(tipoEmpleado=>{
+				$("#tipoEmpleado").append("<option value='"+ tipoEmpleado.codigoTipoEmpleado+"'>"+
+						tipoEmpleado.nombreTipoEmpleado+"</option>");	
+			})
+	})
+	
+	
+}
 //---------------------------------ELIMINAR-------------------------------------//	
 $(document).on("click",".btnEliminar",function(){
 	//evento por defecto
@@ -201,18 +231,21 @@ $(document).on("click",".btnEditar",function(){
 	cod=$(this).parents("tr").find("td")[0].innerHTML;
 	fetch("buscar?codigo="+cod)
 	.then(response=>response.json())
-	.then(editorial=>{
+	.then(empleado=>{
 		//console.log(computadora);
-		$("#codigo").val(editorial.idEditorial);
-		$("#nombre").val(editorial.nombre);
-		$("#direccion").val(editorial.direccion);
-		$("#telefono").val(editorial.telefono);
-		$("#correo").val(editorial.correo);
-		$("#pais").val(editorial.pais.idPais);
+		$("#codigo").val(empleado.codigoEmpleado);
+		$("#nombre").val(empleado.nombres);
+		$("#apellido").val(empleado.apellidos);
+		$("#sexo").val(empleado.sexo);
+		$("#fecReg").val(empleado.fechaRegistro);
+		$("#fecNac").val(empleado.fechaNacimiento);
+		$("#direccion").val(empleado.direccion);
+		$("#distritoEmpleado").val(empleado.distritoEmpleado.idDistrito);
+		$("#tipoEmpleado").val(empleado.tipoEmpleado.codigoTipoEmpleado);
 	})
 	
-	$("#idTitulo").text("ACTUALIZAR EDITORIAL");
-	$('#modalEditorial').modal({backdrop: 'static',keyboard:false,show:true});
+	$("#idTitulo").text("ACTUALIZAR Empleado");
+	$('#modalEmpleado').modal({backdrop: 'static',keyboard:false,show:true});
 
 	    
 });	
@@ -220,17 +253,17 @@ $(document).on("click",".btnEditar",function(){
 
 //---------------------------------CERRAR-------------------------------------//	
 $(document).on("click","#btnCerrar",function(){
-	$('#frmEditorial').trigger("reset");
-	$('#frmEditorial').data('bootstrapValidator').resetForm(true);
+	$('#frmEmpleado').trigger("reset");
+	$('#frmEmpleado').data('bootstrapValidator').resetForm(true);
 	$("#codigo").val("0");		
-	$("#idTitulo").text("REGISTRAR EDITORIAL");
-	$('#modalEditorial').modal("hide");
+	$("#idTitulo").text("REGISTRAR Empleado");
+	$('#modalEmpleado').modal("hide");
 })
 
 </script>
 <script type="text/javascript">    
     $(document).ready(function(){     
-        $('#frmEditorial').bootstrapValidator({      
+        $('#frmEmpleado').bootstrapValidator({      
         	 fields:{
         		 nombre:{
         			 	validators:{
@@ -242,7 +275,29 @@ $(document).on("click","#btnCerrar",function(){
         			 			message:'Campo nombre solo letras min 2 hasta max 15 letras'
         			 		}
         			 	}
-        		 },   
+        		 },
+        		 apellido :{
+     			 	validators:{
+     			 		notEmpty:{
+     			 			message:'Campo nombre es obligatorio'	
+     			 		},
+     			 		regexp:{
+     			 			regexp:/^[a-zA-Z\s\ñ\Ñ\á\é]{5,15}$/,
+     			 			message:'Campo nombre solo letras min 5 hasta max 15 letras'
+     			 		}
+     			 	}
+     		 },      
+     		sexo :{
+  			 	validators:{
+  			 		notEmpty:{
+  			 			message:'Campo nombre es obligatorio'	
+  			 		},
+  			 		regexp:{
+  			 			regexp:/^[a-zA-Z\s\ñ\Ñ\á\é]{5,15}$/,
+  			 			message:'Campo nombre solo letras min 5 hasta max 15 letras'
+  			 		}
+  			 	}
+  		      }, 
         		 direccion:{
         			 validators:{
      			 		notEmpty:{
@@ -254,32 +309,21 @@ $(document).on("click","#btnCerrar",function(){
      			 		}
      			 	}
      		    },     
-     		   telefono:{
+     		     
+     		   distritoEmpleado:{
      			 	validators:{
      			 		notEmpty:{
-     			 			message:'Campo telefono es obligatorio'	
-     			 		}
-     			 	}
-     		 	 },
-     		 	correo:{
-     			 	validators:{
-     			 		notEmpty:{
-     			 			message:'Campo precio es obligatorio'	
-     			 		},
-     			 		 regex: {
-         					regex:"/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/",
-         					message:"Formato de correo incorrecto"
-                         }
-     			 	}
-     		 	 },    
-     		 	pais:{
-     			 	validators:{
-     			 		notEmpty:{
-     			 			message:'Campo pais es obligatorio'	
+     			 			message:'Campo distrito es obligatorio'	
      			 		}
      			 	}
      		 	 },    
-     		 	 
+     		 	tipoEmpleado:{
+       			 	validators:{
+       			 		notEmpty:{
+       			 			message:'Campo tipo Empleado es obligatorio'	
+       			 		}
+       			 	}
+       		 	 },  
      		 	 
         	 }
         });   

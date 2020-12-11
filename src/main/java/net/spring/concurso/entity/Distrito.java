@@ -1,6 +1,5 @@
 package net.spring.concurso.entity;
 import java.io.Serializable;
-import java.util.List;
 
 public class Distrito implements Serializable{
 

@@ -181,6 +181,12 @@ th, td {
     font-weight: 500;
     font-size: 13px;
 }
+
+.dataTables_wrapper .dataTables_filter{
+	font-weight: 500;
+    font-size: 13px;
+    float: left;
+}
 #myTable tr.normal{ background:#304f6f;}
 #myTable{
 	text-align: left;

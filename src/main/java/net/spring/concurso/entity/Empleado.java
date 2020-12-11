@@ -7,8 +7,8 @@ public class Empleado implements Serializable{
 	private String nombres;
 	private String apellidos;
 	private String sexo;
-	private Date fechaRegistro;
-	private Date fechaNacimiento;
+	private String fechaRegistro;
+	private String fechaNacimiento;
 	private String direccion;
 	private Distrito distritoEmpleado;
 	private TipoEmpleado tipoEmpleado;
@@ -53,19 +53,20 @@ public class Empleado implements Serializable{
 		this.sexo = sexo;
 	}
 
-	public Date getFechaRegistro() {
+	
+	public String getFechaRegistro() {
 		return fechaRegistro;
 	}
 
-	public void setFechaRegistro(Date fechaRegistro) {
+	public void setFechaRegistro(String fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

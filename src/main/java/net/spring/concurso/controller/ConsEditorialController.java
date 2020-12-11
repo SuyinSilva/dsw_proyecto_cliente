@@ -1,6 +1,4 @@
 package net.spring.concurso.controller;
-import java.util.Date;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,52 +12,43 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.Gson;
-import net.spring.concurso.entity.Distrito;
-import net.spring.concurso.entity.Empleado;
-import net.spring.concurso.entity.TipoEmpleado;
+import net.spring.concurso.entity.Editorial;
+import net.spring.concurso.entity.Pais;
 
 @Controller
-@RequestMapping(value = "/empleadoA")
-public class EmpleadoController {
-	private String URL="http://localhost:8080/WS_Servidor/empleado";
+@RequestMapping(value = "/editorialCon")
+public class ConsEditorialController {
+	private String URL="http://localhost:8080/WS_Servidor/editorial";
+	
 	
 	@RequestMapping(value = "/")
-	public String principal(Model model) {
+	public String secundario(Model model) {
 		//clase para llamar a un servicio 
 		RestTemplate rt=new RestTemplate();
 		//acceder a la anotaciòn GET del servicio usar el nombre "listAllComputadora"
-		ResponseEntity<Empleado[]>data= rt.getForEntity(URL+"/listAllEmpleado", Empleado[].class);
+		ResponseEntity<Editorial[]>data= rt.getForEntity(URL+"/listAllEditorial", Editorial[].class);
 		//obtener el JSOn que tiene data
-		Empleado[] lista=data.getBody();
+		Editorial[] lista=data.getBody();
 		//crear un atrubuto
-		model.addAttribute("dataEmpleados",lista);
-		return "empleado";
+		model.addAttribute("dataEditoriales",lista);
+		return "editorialConsultas";
 	}
-	@RequestMapping(value = "/listaTipoEmpleados")
+	@RequestMapping(value = "/listaPaises")
 	@ResponseBody
-	public TipoEmpleado[] listaTipoEmpleados(Model model) {
-		TipoEmpleado[] lista=null;
+	public Pais[] listaPaises(Model model) {
+		Pais[] lista=null;
 		RestTemplate rt=new RestTemplate();
-		ResponseEntity<TipoEmpleado[]>data= rt.getForEntity(URL+"/listAllTipoEmpleado", TipoEmpleado[].class);
-		lista=data.getBody();
-		return lista;
-	}
-	@RequestMapping(value = "/listaDistritos")
-	@ResponseBody
-	public Distrito[] listaDistritos(Model model) {
-		Distrito[] lista=null;
-		RestTemplate rt=new RestTemplate();
-		ResponseEntity<Distrito[]>data= rt.getForEntity(URL+"/listAllDistrito", Distrito[].class);
+		ResponseEntity<Pais[]>data= rt.getForEntity(URL+"/listAllPais", Pais[].class);
 		lista=data.getBody();
 		return lista;
 	}
 
 	@RequestMapping(value = "/buscar")
 	@ResponseBody
-	public Empleado buscar(@RequestParam("codigo") int cod) {
-		Empleado lista=null;
+	public Editorial buscar(@RequestParam("codigo") int cod) {
+		Editorial lista=null;
 		RestTemplate rt=new RestTemplate();
-		ResponseEntity<Empleado>data= rt.getForEntity(URL+"/findEmpleado/"+cod, Empleado.class);
+		ResponseEntity<Editorial>data= rt.getForEntity(URL+"/findEditorial/"+cod, Editorial.class);
 		lista=data.getBody();
 		return lista;
 	}	
@@ -68,25 +57,19 @@ public class EmpleadoController {
 	@RequestMapping(value = "/save")
 	public String save(@RequestParam("codigo") int cod,
 						@RequestParam("nombre") String nom,
-						@RequestParam("apellido") String ape,
-						@RequestParam("sexo") String sex,
-						@RequestParam("fecReg") String fecReg,
-						@RequestParam("fecNac") String fec,
 						@RequestParam("direccion") String dir,
-						@RequestParam("distritoEmpleado") int idDistrito,
-						@RequestParam("tipoEmpleado") int codigoTipoEmpleado,
+						@RequestParam("telefono") String tel,
+						@RequestParam("correo") String cor,
+						@RequestParam("pais") int idPais,
 						RedirectAttributes redirect) {
 		//crear objeto de la clase Computadora
-		Empleado bean=new Empleado();
-		bean.setCodigoEmpleado(cod);
-		bean.setNombres(nom);
-		bean.setApellidos(dir);
-		bean.setSexo(sex);
-		bean.setFechaRegistro(fecReg);
-		bean.setFechaNacimiento(fec);
+		Editorial bean=new Editorial();
+		bean.setIdEditorial(cod);
+		bean.setNombre(nom);
 		bean.setDireccion(dir);
-		bean.setDistritoEmpleado(new Distrito(idDistrito));
-		bean.setTipoEmpleado(new TipoEmpleado(codigoTipoEmpleado));
+		bean.setTelefono(tel);
+		bean.setCorreo(cor);
+		bean.setPais(new Pais(idPais));
 		//serializar
 		Gson gson=new Gson();
 		String json=gson.toJson(bean);
@@ -99,7 +82,7 @@ public class EmpleadoController {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			//unir json+headers
 			HttpEntity<String> request=new HttpEntity<String>(json,headers);
-			rt.postForObject(URL+"/saveEmpleado", request, String.class);
+			rt.postForObject(URL+"/saveEditorial", request, String.class);
 			redirect.addFlashAttribute("MENSAJE","Registro correcto...");
 		}
 		else {
@@ -108,11 +91,11 @@ public class EmpleadoController {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			//unir json+headers
 			HttpEntity<String> request=new HttpEntity<String>(json,headers);
-			rt.put(URL+"/updateEmpleado", request, String.class);
-			redirect.addFlashAttribute("MENSAJE","Actualizado...");			
+			rt.put(URL+"/updateEditorial", request, String.class);
+			redirect.addFlashAttribute("MENSAJE","Registro actualizado...");			
 		}
 		
-		return "redirect:/empleadoA/";
+		return "redirect:/editorialCon/";
 	}
 	
 	@RequestMapping(value = "/delete/{codigo}")
@@ -120,13 +103,13 @@ public class EmpleadoController {
 						RedirectAttributes redirect) {
 		RestTemplate rt=new RestTemplate();
 		try {
-			rt.delete(URL+"/deleteEmpleado/"+cod);
-			redirect.addFlashAttribute("MENSAJE","Empleado eliminado Correctamente...");
+			rt.delete(URL+"/deleteEditorial/"+cod);
+			redirect.addFlashAttribute("MENSAJE","Editorial eliminado Correctamente...");
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirect.addFlashAttribute("MENSAJE","Error en la eliminaciòn...");
 		}
-		return "redirect:/empleadoA/";
+		return "redirect:/editorialCon/";
 	}
 }
 
